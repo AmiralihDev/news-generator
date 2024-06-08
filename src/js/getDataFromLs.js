@@ -3,7 +3,6 @@ function getDataFromLs(key = ""){
     if(data){
         return JSON.parse(data)
     }else{
-        return false
     }
 }
 

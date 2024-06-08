@@ -39,7 +39,14 @@ body {
   margin-top: 5px;
 }
 h1:first-child{
-  text-align: right;
+  text-align: center;
+}
+#description-menu{
+  width: 1200px;
+  margin-top: 50px;
+  height: 500px;
+  position: absolute;
+  left: 25%;
 }
 a{
   text-decoration: none;
