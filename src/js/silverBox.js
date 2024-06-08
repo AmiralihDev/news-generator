@@ -1219,4 +1219,4 @@ function silverBox(config = {}) {
 		throw error;
 	}
 }
-export default silverBox
+export {silverBox}

@@ -11,61 +11,53 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
-#container {
-  width: 100%;
-  height: 100%;
-}
-h1 {
-  width: 100%;
-  text-align: center;
-}
-#comment form {
-  margin-top: 15px;
-}
-button {
-  background-color: rgb(0, 209, 80);
-  color: white;
-  border: none;
-  border-radius: 4px;
-}
-#box {
+#menu{
   background-color: gray;
-  width: 24%;
-  height: 100%;
+  width: 230px;
+  padding: 25px;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
-  overflow-x: scroll;
-
+  overflow-y: scroll;
 }
-#comment {
-  width: 76%;
-  height: 150px;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  background-color: gray;
+#input-fliter{
+  width: 209px;
+  height: 30px;
+  border-radius: 5px;
+  border: none;
+  border-bottom: 1px solid gray;
 }
-.news{
-    margin-top: 10px;
-    background-color: white;
-    width: 90%;
-    margin: 0 auto;
-    border-radius: 5px;
-    padding: 0;
+.menu-item{
+  background-color: white;
+  margin-top: 15px;
+  padding: 8px;
+  border-radius: 6px;
+  height: 120px;
 }
-.news div *{
-    margin-top:-15px;
+.menu-item p {
+  margin-top: 5px;
 }
-#newBtn {
-  position: fixed;
-  right: 15px;
-  top: 15px;
+h1:first-child{
+  text-align: right;
+}
+a{
+  text-decoration: none;
+}
+textarea {
+  width: 400px;
+  height: 100px;
+  background: gray;
+}
+#newsCreateor{
   width: 100px;
-  height: 35px;
-}
-#sendCommentBtn {
-  width: 150px;
-  height: 28px;
+  height: 30px;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(12, 173, 0);
+  color: white;
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  visibility: hidden;
 }

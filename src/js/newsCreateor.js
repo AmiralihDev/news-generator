@@ -1,0 +1,4 @@
+function newsCreateor(){
+    
+}
+export {newsCreateor}
