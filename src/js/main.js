@@ -1,126 +1,246 @@
-import { findAdmin } from "./findAdmin";
-import { newsCreateor } from "./newsCreateor";
-import { ShowData } from "./showData";
-import domGenerator from "dom-generator";
-import { silverBox } from "./silverBox";
+import { checkAdmin } from "./checkAdmin";
 import { getDataFromLs } from "./getDataFromLs";
-import { setNewsReader } from "./setNewsReader";
-import { setDataToLs } from "./setDataToLs";
-import { findNews } from "./showNews";
+import { newsCreator } from "./newsCreator";
+import { setDataInLs } from "./setDataInLs";
+import { showDateInComment, showLsData } from "./showData";
+import { silverBox } from "./silverBox";
 
+let websiteTitle = document.getElementById("websiteTitle");
 let menu = document.getElementById("menu");
-let newBtn = document.getElementById("newsCreateor");
+let inputFilter = document.getElementById("input-fliter");
+let h1Welcome = document.getElementById("welcome");
+let newNewsBtn = document.getElementById("newsCreator");
+let newsTitle = document.getElementById("newsTitle");
+let newsDec = document.getElementById("newsDec");
+let newsAuthor = document.getElementById("newsAuthor");
+let newsDate = document.getElementById("newsDate");
+let comments = document.getElementById("comments");
+let commentsContainr = document.getElementById("commentsContainr");
+let authorComment = document.getElementById("authorComment");
+let authorEmail = document.getElementById("authorEmail");
+let newsComment = document.getElementById("comment");
+let sendCommentBtn = document.getElementById("sendBtn");
+
+
+// let newsList = [
+//   {
+//     author : "f",
+//     title : title,
+//     news : "f",
+//     date : "1",
+//     comments : [
+//       {
+//         date : "2",
+//         author : "gg",
+//         comment : "f",
+//       }
+//     ]
+//   }
+// ]
+
 let newsList = [];
+let newsIndex 
 
-function EventListener() {
-  document.addEventListener("DOMContentLoaded", settings);
-  document.addEventListener("click", findNewsMain);
-  newBtn.addEventListener("click", newsCreateorValidation);
+
+function eventListener() {
+  document.addEventListener("DOMContentLoaded", init);
+  newNewsBtn.addEventListener("click", getNewsValue);
+  inputFilter.addEventListener("input", searchNews);
+  sendCommentBtn.addEventListener("click", getCommentValue);
 }
+eventListener();
 
-EventListener();
-function settings() {
-  if (localStorage.getItem("isAdmin") != "true") {
-    localStorage.setItem("isAdmin", "false");
-  }
-  let data = getDataFromLs("newsList");
-  if (data) {
-    
-    newsList = data;
-    data.forEach((element) => {
-      let storage = new ShowData(
-        element.auther,
-        element.title,
-        element.date
-      );
-    });
-  }
-  let admin = findAdmin();
-  if (admin == true) {
+function init() {
+  let isAdmin = checkAdmin();
+  if (isAdmin == true) {
     showNewBtn();
   }
+  let data = JSON.parse(getDataFromLs("newsList"));
+
+  if (data != null) {
+    newsList = data;
+    showLsData(newsList);
+  }
+  getMenuNews();
 }
 
-function showNewBtn() {
-  newBtn.style.visibility = "visible";
-}
-
-function newsCreateorValidation() {
-  let textArea = document.createElement("textarea");
-  textArea.id = "newsCreateDes";
-  silverBox({
-    customIcon: "",
-    title: {
-      text: "new news",
-    },
-    centerContent: true,
-    text: "Enter your news information",
-    showCloseButton: true,
-    confirmButton: {
-      text: "Create",
-      closeOnClick: true,
-      id: "createBtn",
-      bgColor: "gray",
-    },
-    cancelButton: {},
-    input: [
-      {
-        label: "Title",
-        type: "text",
-        placeHolder: "Enter Title",
-        id: "title",
-      },
-      {
-        label: "name",
-        type: "text",
-        placeHolder: "Enter your name",
-        id: "name",
-      },
-    ],
-    html: textArea,
+function getMenuNews() {
+  let menuItem = document.querySelectorAll(".menu-item");
+  menuItem.forEach((news, index) => {
+    news.addEventListener("click", () => {
+      showNews(index);
+      newsIndex = index
+    });
   });
+}
 
-  textArea = document.getElementById("newsCreateDes");
-  let name = document.getElementById("name");
-  let createBtn = document.getElementById("createBtn");
-  let title = document.getElementById("title");
-  createBtn.addEventListener("click", () => {
-    if (name.value == "" || textArea.value == "" || title.value == "") {
-      silverBox({
-        alertIcon: "error",
-        text: "value is empty try again.",
-        centerContent: true,
-        cancelButton: {
-          text: "OK",
-        },
-      });
-    } else if (textArea.value.length < 12) {
-      silverBox({
-        alertIcon: "error",
-        text: "your news text is small try again.",
-        centerContent: true,
-        cancelButton: {
-          text: "OK",
-        },
-      });
+function searchNews() {
+  let menuItem = document.querySelectorAll(".menu-item");
+  menuItem.forEach((news, index) => {
+    if (
+      news.children[0].innerText
+        .toUpperCase()
+        .includes(inputFilter.value.toUpperCase())
+    ) {
+      news.style.display = "block";
     } else {
-        newsCreateor(name.value, title.value, textArea.value, newsList);
-        setDataToLs("newsList", JSON.stringify(newsList));
-        silverBox({
-            title: {
-                   text: "Success",
-                   alertIcon: "success"
-            },
-            text: "Your News is Added."
-     })
+      news.style.display = "none";
     }
   });
 }
 
-function findNewsMain(e) {
-  if (e.target.className == "menu-item") {
-    localStorage.setItem("newsReader","none")
-    setNewsReader(e);
-    findNews()
+function getCommentValue() {
+
+  if (newsComment.value.length < 4 || authorComment.value == "" || authorEmail.value == "") {
+    new Modal().showError("please fill all field")
+  }else{
+    new Modal().showSuccess("comment is added")
+    createComment(newsComment.value,authorComment.value,authorEmail.value)
   }
 }
+function createComment(commentValue,authorNameValue,authorEmailValue){
+  let date = new Date().toLocaleDateString("fa-IR")
+  let obj = {
+    comment : commentValue,
+    author : authorNameValue,
+    email : authorEmailValue,
+    date : date
+  }
+  newsList[newsIndex].comments.push(obj)
+  setDataInLs("newsList",JSON.stringify(newsList))
+  showDateInComment(commentValue,authorNameValue,authorEmailValue,date)
+  newsComment.value = ""
+  newsAuthor.value = ""
+  authorEmail.value = ""
+}
+function showNews(index) {
+  websiteTitle.innerText = newsList[index].title
+  h1Welcome.innerText = newsList[index].title;
+  newsDec.innerText = newsList[index].description;
+  newsAuthor.innerText = newsList[index].author;
+  newsDate.innerText = newsList[index].date;
+  commentsContainr.style.display = "flex";
+  comments.innerHTML = ""
+  newsList[index].comments.forEach((comment) => {
+    showDateInComment(comment.comment,comment.author,comment.email,comment.date)
+  })
+}
+
+function showNewBtn() {
+  newNewsBtn.style.visibility = "visible";
+}
+
+function getNewsValue() {
+  let t = document.createElement("textarea");
+  t.id = "desNewsValue";
+
+  new Modal().getValue(
+    "",
+    "new news",
+    "enter new news information",
+    "create",
+    [
+      {
+        label: "Title",
+        type: "text",
+        placeHolder: "Enter your News Title",
+        id: "titleName",
+      },
+      {
+        label: "Author",
+        type: "text",
+        placeHolder: "Enter your Name",
+        id: "authorName",
+        maxLength: 30,
+      },
+    ],
+    t,
+    "create"
+  );
+  let des = document.getElementById("desNewsValue");
+  let titleName = document.getElementById("titleName");
+  let authorName = document.getElementById("authorName");
+  let create = document.getElementById("create");
+
+  create.addEventListener("click", (e) => {
+    if (
+      des.value.length < 500 ||
+      titleName.value == "" ||
+      authorName.value == ""
+    ) {
+      new Modal().showError("please fill all field");
+    } else {
+      newsList.push(
+        newsCreator(titleName.value, des.value, authorName.value, newsList)
+      );
+
+      new Modal().showSuccess("News Is Created");
+      setDataInLs("newsList", JSON.stringify(newsList));
+      getMenuNews();
+    }
+  });
+}
+
+class Modal {}
+Modal.prototype.showError = (text = "") => {
+  silverBox({
+    alertIcon: "error",
+    text: text,
+    centerContent: true,
+    cancelButton: {
+      text: "OK",
+    },
+  });
+};
+
+Modal.prototype.showInfo = (
+  where = "top-right",
+  text = String,
+  timer = Number
+) => {
+  silverBox({
+    timer: timer,
+    position: where,
+    alertIcon: "info",
+    text: text,
+    centerContent: true,
+    showCloseButton: true,
+  });
+};
+
+Modal.prototype.getValue = (
+  iconSrc = "",
+  title = "",
+  text = "",
+  confirmButton = "",
+  input = [],
+  html,
+  confirmButtonId = ""
+) => {
+  silverBox({
+    customIcon: iconSrc,
+    title: {
+      text: title,
+    },
+    centerContent: true,
+    text: text,
+    showCloseButton: true,
+    confirmButton: {
+      text: confirmButton,
+      closeOnClick: true,
+      id: confirmButtonId,
+    },
+    cancelButton: {},
+    input: input,
+    html: html,
+  });
+};
+Modal.prototype.showSuccess = (text = "") => {
+  silverBox({
+    title: {
+      text: "Success",
+      alertIcon: "success",
+    },
+    text: text,
+  });
+};
