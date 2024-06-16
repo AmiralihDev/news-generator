@@ -133,7 +133,6 @@ function showNewBtn() {
 function getNewsValue() {
   let t = document.createElement("textarea");
   t.id = "desNewsValue";
-
   new Modal().getValue(
     "",
     "new news",
