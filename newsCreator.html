@@ -4,16 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>New News</title>
+    <link rel="stylesheet" href="src/css/editor.css">
+    <link rel="stylesheet" href="src/css/silverBox.css">
 </head>
 
 <body>
-    <div class="editor-container">
-        <div class="editor">
+    <div id="container">
+        <form>
+            <input type="text" placeholder="Enter News Title" id="title">
+            <input type="text" placeholder="Enter Your Name" id="name">
+        </form>
+        <div class="editor-container">
+            <div id="editor">
+            </div>
         </div>
+        <button id="submit">Create</button>
     </div>
     <script src="src/js/ckeditor.js"></script>
-    <script src="src/js/editor.js"></script>
+    <script type="module" src="src/js/editor.js"></script>
 </body>
 
 </html>

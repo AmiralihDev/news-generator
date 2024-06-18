@@ -1,21 +1,88 @@
+import { silverBox } from "./silverBox";
+import { getDataFromLs } from "./getDataFromLs";
+import { setDataInLs } from "./setDataInLs";
+import { showNewsInMenu } from "./showData";
 
-ClassicEditor
-	.create( document.querySelector( '.editor' ), {
-		// Editor configuration.
-	} )
-	.then( editor => {
-		window.editor = editor;
-	} )
-	.catch( handleSampleError );
+ClassicEditor.create(document.querySelector("#editor"), {
+  // Editor configuration.
+})
+  .then((editor) => {
+    window.editor = editor;
+  })
+  .catch(handleSampleError);
 
-function handleSampleError( error ) {
-	const issueUrl = 'https://github.com/ckeditor/ckeditor5/issues';
+function handleSampleError(error) {
+  const issueUrl = "https://github.com/ckeditor/ckeditor5/issues";
 
-	const message = [
-		'Oops, something went wrong!',
-		`Please, report the following error on ${ issueUrl } with the build id "j06a4spb990l-uv1ulcktmbzn" and the error stack trace:`
-	].join( '\n' );
+  const message = [
+    "Oops, something went wrong!",
+    `Please, report the following error on ${issueUrl} with the build id "511tyg3plpkm-5yzplsnuerue" and the error stack trace:`,
+  ].join("\n");
 
-	console.error( message );
-	console.error( error );
+  console.error(message);
+  console.error(error);
+}
+
+let submitBtn = document.getElementById("submit");
+let name = document.getElementById("name");
+let title = document.getElementById("title");
+let ck_blurred = document.querySelector(".ck-rounded-corners");
+
+submitBtn.addEventListener("click", valueValidation);
+
+function valueValidation(e) {
+  let editorData= editor.getData()
+  if (
+    name.value.length == 0 ||
+    title.value.length == 0 ||
+    editorData == ""
+  ) {
+    silverBox({
+      alertIcon: "error",
+      text: "please fill all field",
+      centerContent: true,
+      cancelButton: {
+        text: "OK",
+      },
+    });
+  } else {
+    silverBox({
+      timer: 3000,
+      position: "top-right",
+      alertIcon: "info",
+      text: "news is Added",
+      centerContent: true,
+      showCloseButton: true,
+    });
+    newsCreator(title.value,editorData, name.value);
+  }
+}
+
+function newsCreator(title, editorData, author) {
+  let data = {
+    title: title,
+    description: editorData,
+    author: author,
+    date: new Date().toLocaleDateString("fa-IR"),
+    comments: [],
+  };
+
+  let lsData = getDataFromLs("newsList");
+
+  if (lsData == null) {
+    let newsList = [];
+    newsList.push(data);
+    setDataInLs("newsList", JSON.stringify(newsList));
+  } else {
+    let newsList = JSON.parse(lsData);
+
+    newsList.push(data);
+
+    setDataInLs("newsList", JSON.stringify(newsList));
+  }
+
+  setTimeout(() => {
+    window.open("/index.html");
+    window.close();
+  }, 5000);
 }

@@ -9,7 +9,7 @@ let websiteTitle = document.getElementById("websiteTitle");
 let menu = document.getElementById("menu");
 let inputFilter = document.getElementById("input-fliter");
 let h1Welcome = document.getElementById("welcome");
-let newNewsBtn = document.getElementById("newsCreator");
+let newNewsBtn = document.getElementById("newsCreatorBtn");
 let newsTitle = document.getElementById("newsTitle");
 let newsDec = document.getElementById("newsDec");
 let newsAuthor = document.getElementById("newsAuthor");
@@ -116,7 +116,8 @@ function createComment(commentValue,authorNameValue,authorEmailValue){
 function showNews(index) {
   websiteTitle.innerText = newsList[index].title
   h1Welcome.innerText = newsList[index].title;
-  newsDec.innerText = newsList[index].description;
+  newsDec.innerHTML = newsList[index].description;
+  console.log(newsList[index].description);
   newsAuthor.innerText = newsList[index].author;
   newsDate.innerText = newsList[index].date;
   commentsContainr.style.display = "flex";
@@ -131,53 +132,55 @@ function showNewBtn() {
 }
 
 function getNewsValue() {
-  let t = document.createElement("textarea");
-  t.id = "desNewsValue";
-  new Modal().getValue(
-    "",
-    "new news",
-    "enter new news information",
-    "create",
-    [
-      {
-        label: "Title",
-        type: "text",
-        placeHolder: "Enter your News Title",
-        id: "titleName",
-      },
-      {
-        label: "Author",
-        type: "text",
-        placeHolder: "Enter your Name",
-        id: "authorName",
-        maxLength: 30,
-      },
-    ],
-    t,
-    "create"
-  );
-  let des = document.getElementById("desNewsValue");
-  let titleName = document.getElementById("titleName");
-  let authorName = document.getElementById("authorName");
-  let create = document.getElementById("create");
+  window.open("newsCreator")
+  window.close
+  // let t = document.createElement("textarea");
+  // t.id = "desNewsValue";
+  // new Modal().getValue(
+  //   "",
+  //   "new news",
+  //   "enter new news information",
+  //   "create",
+  //   [
+  //     {
+  //       label: "Title",
+  //       type: "text",
+  //       placeHolder: "Enter your News Title",
+  //       id: "titleName",
+  //     },
+  //     {
+  //       label: "Author",
+  //       type: "text",
+  //       placeHolder: "Enter your Name",
+  //       id: "authorName",
+  //       maxLength: 30,
+  //     },
+  //   ],
+  //   t,
+  //   "create"
+  // );
+  // let des = document.getElementById("desNewsValue");
+  // let titleName = document.getElementById("titleName");
+  // let authorName = document.getElementById("authorName");
+  // let create = document.getElementById("create");
 
-  create.addEventListener("click", (e) => {
-    if (
-      des.value.length < 500 ||
-      titleName.value == "" ||
-      authorName.value == ""
-    ) {
-      new Modal().showError("please fill all field");
-    } else {
-      newsList.push(
-        newsCreator(titleName.value, des.value, authorName.value, newsList)
-      );
+  // create.addEventListener("click", (e) => {
+  //   if (
+  //     des.value.length < 500 ||
+  //     titleName.value == "" ||
+  //     authorName.value == ""
+  //   ) {
+  //     new Modal().showError("please fill all field");
+  //   } else {
+  //     newsList.push(
+  //       newsCreator(titleName.value, des.value, authorName.value, newsList)
+  //     );
 
-      new Modal().showSuccess("News Is Created");
-      setDataInLs("newsList", JSON.stringify(newsList));
-      getMenuNews();
-    }
-  });
+  //     new Modal().showSuccess("News Is Created");
+  //     setDataInLs("newsList", JSON.stringify(newsList));
+  //     getMenuNews();
+  //   }
+  // });
 }
 
 class Modal {}
