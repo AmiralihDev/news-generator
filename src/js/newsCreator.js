@@ -5,12 +5,12 @@ function newsCreator(title,des,author,newsList){
         title : title,
         description : des,
         author : author,
-        date : new Date().toLocaleDateString("fa-IR"),
+        date : new Date().toLocaleDateString('fa-IR-u-nu-latn'),
         comments : [
 
         ]
     }
-    showNewsInMenu(title,author,data.date)
+    showNewsInMenu(title,author,data.date,data.comments.length)
     return data
 }
 

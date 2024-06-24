@@ -3,71 +3,113 @@
   font-family: vasir;
   src: url(/public/font/Vazir-Bold.ttf);
 }
+@font-face {
+  font-family: inkfree;
+  src: url(/public/font/Inkfree.ttf);
+}
 * {
-  font-family: "vasir";
+  font-family: "inkfree";
 }
 body {
   margin: 0;
-  padding: 0;
+  padding: 0 15px;
   box-sizing: border-box;
   display: flex;
+  background-color: #c2c4c8;
+}
+
+#container{
+  width: 89%;
+  height: 1500px;
+  margin: 50px auto;
+  background: #da1010;
+  position: relative;
 }
 #menu {
-  height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 20%; /* Set the width of the sidebar */
-  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
-  left: 0;
-  background-color: gray; /* Black */
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  border-radius: 20px;
+  height: 100%; 
+  width: 20%; 
+  position: fixed; 
+  z-index: 1; 
+  top: 55px; 
+  right: 50px;
+  background-color: #eee; 
   overflow-y: scroll;
 }
-#newsDetails{
+#menu p {
+  font-family: "vasir";
+  margin-left: 10px;
+}
+
+#newsDetails {
   padding: 50px 20px;
 }
 #main {
-  margin-left: 20%;
-  padding:0;
-  width: 80%;
-  background: #ffffff;
+  border-radius: 20px;
+  padding: 0;
+  width: 69.5%;
+  top: 55px;
+  height: 100%;
+  position: absolute;
+  left: 90px;
+  background: #eee;
 }
-#newsDec{
-  padding: 10px 50px;
+#newsDec {
+  padding: 0 0;
   margin-top: 45px;
+  width: 100%;
 }
-#comment{
+#comment {
   background-color: white;
   height: 30px;
-  width: 100%W;
+  width: 100%;
 }
-#comments{
-  background-color: #ffffff;
+#comments {
+  flex-wrap: wrap;
   margin-top: 15px;
   margin-left: 5px;
+  /* overflow-y: scroll; */
 }
-.comments-item{
+.comments-item {
   background-color: aqua;
-  width: 33%;
+  width: 29%;
+  padding: 15px;
+  display: inline-block;
+  margin-right: 5px;
+  margin-top: 5px;
 }
-#commentsContainr{
+.comments-item *{
+  font-family: "vasir";
+}
+.menu-item-title{
+  font-size: 18px;
+  text-align: center;
+}
+.menu-item-author{
+  opacity: 0.5;
+}
+.menu-item-date{
+  opacity: 0.5;
+}
+.menu-item-comment{
+  opacity: 0.5;
+  margin-top: 0;
+}
+#commentsContainr {
   padding: 10px;
   background-color: rgb(136, 136, 136);
-  width: 100%;
-  overflow-y: scroll;
+  width: 98%;
+  /* overflow-y: scroll; */
+  /* overflow: hidden; */
   display: none;
   flex-direction: column;
-  height: 150px;
+  height: 100%;
 }
-#commentsContainr form{
+#commentsContainr form {
   display: flex;
   align-items: center;
 }
-#commentsContainr form button{
+#commentsContainr form button {
   border: none;
   width: 150px;
   height: 35px;
@@ -78,35 +120,51 @@ body {
   margin-left: 5px;
   margin-top: 5px;
 }
-#input-fliter{
-  width: 209px;
-  height: 30px;
+#input-fliter {
+  width: 90%;
+  height: 35px;
+  margin-top: 20px;
+  font-family: "vasir";
   border-radius: 5px;
   border: none;
+  margin-left: 15px;
   border-bottom: 1px solid gray;
 }
-.menu-item{
-  background-color: white;
-  margin-top: 15px;
-  padding: 8px;
+.newsAuthor {
+  font-family: "vasir";
+}
+.newsDate {
+  font-family: "vasir";
+}
+.menu-item {
+  margin-top: 5px;
+  /* margin-left: 25px; */
+  margin-right: 8px;
   border-radius: 6px;
   height: 120px;
-  width: 80%;
+  width: 100%;
+}
+.menu-item *{
+  margin-bottom: 0px;
+}
+hr {
+  border:  1px solid black;
+  width: 100%;
 }
 .menu-item p {
   margin-top: 5px;
 }
-h1:first-child{
+h1:first-child {
   text-align: center;
 }
-#description-menu{
+#description-menu {
   width: 1200px;
   margin-top: 50px;
   height: 500px;
   position: absolute;
   left: 25%;
 }
-a{
+a {
   text-decoration: none;
 }
 textarea {
@@ -114,7 +172,7 @@ textarea {
   height: 100px;
   background: gray;
 }
-#newsCreatorBtn{
+#newsCreatorBtn {
   width: 100px;
   height: 30px;
   border-radius: 5px;
@@ -123,6 +181,13 @@ textarea {
   color: white;
   position: fixed;
   top: 15px;
-  right: 15px;
+  left: 15px;
+  text-align: center;
   visibility: hidden;
+}
+#newsAuthor {
+  font-family: "vasir";
+}
+#newsDate {
+  font-family: "vasir";
 }

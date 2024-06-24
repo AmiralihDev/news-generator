@@ -22,22 +22,6 @@ let newsComment = document.getElementById("comment");
 let sendCommentBtn = document.getElementById("sendBtn");
 
 
-// let newsList = [
-//   {
-//     author : "f",
-//     title : title,
-//     news : "f",
-//     date : "1",
-//     comments : [
-//       {
-//         date : "2",
-//         author : "gg",
-//         comment : "f",
-//       }
-//     ]
-//   }
-// ]
-
 let newsList = [];
 let newsIndex 
 
@@ -132,8 +116,7 @@ function showNewBtn() {
 }
 
 function getNewsValue() {
-  window.open("newsCreator")
-  window.close
+  
   // let t = document.createElement("textarea");
   // t.id = "desNewsValue";
   // new Modal().getValue(

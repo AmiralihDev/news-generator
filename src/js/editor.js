@@ -5,6 +5,14 @@ import { showNewsInMenu } from "./showData";
 
 ClassicEditor.create(document.querySelector("#editor"), {
   // Editor configuration.
+  ui: {
+    poweredBy: {
+        position: 'inside',
+        side: 'left',
+        label: 'This is',
+    }
+    
+}
 })
   .then((editor) => {
     window.editor = editor;
@@ -59,14 +67,15 @@ function valueValidation(e) {
 }
 
 function newsCreator(title, editorData, author) {
+  let d = new Date().toLocaleDateString('fa-IR-u-nu-latn')
   let data = {
     title: title,
     description: editorData,
     author: author,
-    date: new Date().toLocaleDateString("fa-IR"),
+    date: `${d},  ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`, 
     comments: [],
   };
-
+  console.log(data);
   let lsData = getDataFromLs("newsList");
 
   if (lsData == null) {
@@ -82,7 +91,7 @@ function newsCreator(title, editorData, author) {
   }
 
   setTimeout(() => {
-    window.open("/index.html");
     window.close();
-  }, 5000);
+    window.open("/index.html");
+  }, 3000);
 }

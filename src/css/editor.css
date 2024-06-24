@@ -1,26 +1,31 @@
 body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 150px;
 }
-.editor-container{
-    width: 1000px;
-    
+.editor-container {
+  width: 1000px;
 }
-#name,#title{
-    width: 250px;
-    height: 25px;
-    
+#name,
+#title {
+  width: 250px;
+  height: 25px;
 }
-form{
-    margin-bottom: 30px;
+form {
+  margin-bottom: 30px;
 }
 #submit {
-    margin-top: 25px;
-    background-color: aqua;
-    border-radius: 5px;
-    border: none;
-    width: 130px;
-    height: 30px;
+  margin-top: 25px;
+  background-color: aqua;
+  border-radius: 5px;
+  border: none;
+  width: 130px;
+  text-align: center;
+  height: 30px;
+}
+#submit a {
+  text-decoration: none;
+  color: black;
+  padding:40px;
 }
