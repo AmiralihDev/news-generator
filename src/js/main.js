@@ -28,7 +28,6 @@ let newsIndex
 
 function eventListener() {
   document.addEventListener("DOMContentLoaded", init);
-  newNewsBtn.addEventListener("click", getNewsValue);
   inputFilter.addEventListener("input", searchNews);
   sendCommentBtn.addEventListener("click", getCommentValue);
 }
@@ -83,16 +82,16 @@ function getCommentValue() {
   }
 }
 function createComment(commentValue,authorNameValue,authorEmailValue){
-  let date = new Date().toLocaleDateString("fa-IR")
+  let date = new Date().toLocaleDateString('fa-IR-u-nu-latn')
   let obj = {
     comment : commentValue,
     author : authorNameValue,
     email : authorEmailValue,
-    date : date
+    date : `${date},  ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
   }
   newsList[newsIndex].comments.push(obj)
   setDataInLs("newsList",JSON.stringify(newsList))
-  showDateInComment(commentValue,authorNameValue,authorEmailValue,date)
+  showDateInComment(commentValue,authorNameValue,authorEmailValue,obj.date)
   newsComment.value = ""
   newsAuthor.value = ""
   authorEmail.value = ""
@@ -101,7 +100,6 @@ function showNews(index) {
   websiteTitle.innerText = newsList[index].title
   h1Welcome.innerText = newsList[index].title;
   newsDec.innerHTML = newsList[index].description;
-  console.log(newsList[index].description);
   newsAuthor.innerText = newsList[index].author;
   newsDate.innerText = newsList[index].date;
   commentsContainr.style.display = "flex";
@@ -113,57 +111,6 @@ function showNews(index) {
 
 function showNewBtn() {
   newNewsBtn.style.visibility = "visible";
-}
-
-function getNewsValue() {
-  
-  // let t = document.createElement("textarea");
-  // t.id = "desNewsValue";
-  // new Modal().getValue(
-  //   "",
-  //   "new news",
-  //   "enter new news information",
-  //   "create",
-  //   [
-  //     {
-  //       label: "Title",
-  //       type: "text",
-  //       placeHolder: "Enter your News Title",
-  //       id: "titleName",
-  //     },
-  //     {
-  //       label: "Author",
-  //       type: "text",
-  //       placeHolder: "Enter your Name",
-  //       id: "authorName",
-  //       maxLength: 30,
-  //     },
-  //   ],
-  //   t,
-  //   "create"
-  // );
-  // let des = document.getElementById("desNewsValue");
-  // let titleName = document.getElementById("titleName");
-  // let authorName = document.getElementById("authorName");
-  // let create = document.getElementById("create");
-
-  // create.addEventListener("click", (e) => {
-  //   if (
-  //     des.value.length < 500 ||
-  //     titleName.value == "" ||
-  //     authorName.value == ""
-  //   ) {
-  //     new Modal().showError("please fill all field");
-  //   } else {
-  //     newsList.push(
-  //       newsCreator(titleName.value, des.value, authorName.value, newsList)
-  //     );
-
-  //     new Modal().showSuccess("News Is Created");
-  //     setDataInLs("newsList", JSON.stringify(newsList));
-  //     getMenuNews();
-  //   }
-  // });
 }
 
 class Modal {}

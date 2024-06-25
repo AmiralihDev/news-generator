@@ -2,15 +2,6 @@ import domGenerator from "dom-generator";
 let menu = document.getElementById("menu");
 let comments = document.getElementById("comments");
 function showDateInComment(comment, author, email, date) {
-  let l = `<div class="comments-item">
-            <div>
-              <p class="author-name">name</p>
-              <p class="author-email">email</p>
-              <p class="comment-date">date</p>
-            </div>
-            <p class="comment">comment</p>
-  
-          </div>`;
   let template = domGenerator({
     tag: "div",
     attributes: { class: "comments-item" },
